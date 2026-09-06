@@ -2,11 +2,8 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
-  <meta name="theme-color" content="#4ba7ca" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
-  <meta name="apple-mobile-web-app-title" content="Listing" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#19191f" />
   <title>Listing · To Do & Shopping</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -14,135 +11,130 @@
   <link rel="stylesheet" href="css/styles.css" />
 </head>
 <body>
-  <!-- watercolor background -->
-  <div class="bg-grain" aria-hidden="true"></div>
-  <div class="bg-blobs" aria-hidden="true">
-    <span class="blob blob-blue1"></span>
-    <span class="blob blob-pink1"></span>
-    <span class="blob blob-blue2"></span>
-    <span class="blob blob-pink2"></span>
-    <span class="blob blob-blue3"></span>
-  </div>
-  <!-- falling bubbles -->
-  <div class="bubbles" id="bubbles" aria-hidden="true"></div>
+  <!-- ===== Top app bar ===== -->
+  <header class="topbar">
+    <button class="icon-btn" id="menuBtn" aria-label="Open menu">
+      <span class="burger"><i></i><i></i><i></i></span>
+    </button>
+    <h1 class="view-title" id="viewTitle">Main</h1>
+    <span class="topbar-date" id="topbarDate"></span>
+  </header>
 
-  <main class="app">
-    <!-- ===== HERO: date + week ===== -->
-    <header class="hero">
-      <div class="hero-wash" aria-hidden="true"></div>
-      <div class="hero-inner">
-        <div class="hero-date">
-          <span class="weekday" id="weekDay">Sunday</span>
-          <span class="dot">·</span>
-          <span class="fulldate" id="fullDate">—</span>
-        </div>
-        <h1 class="app-title">Listing</h1>
-        <svg class="underline" viewBox="0 0 220 14" preserveAspectRatio="none" aria-hidden="true">
-          <path d="M4 9 C 44 3, 88 12, 130 6 S 190 4, 216 8" stroke="#ffb6c1" stroke-width="4" fill="none" stroke-linecap="round"/>
-        </svg>
-        <p class="tagline">a gentle little day</p>
+  <!-- ===== Sidebar (drawer on mobile, persistent on desktop) ===== -->
+  <aside class="sidebar" id="sidebar" aria-label="Navigation">
+    <div class="brand">
+      <span class="brand-mark">L</span>
+      <span class="brand-name">Listing</span>
+    </div>
+    <nav class="nav">
+      <button class="nav-item active" data-view="main">
+        <span class="nav-ico">✦</span><span class="nav-label">Main</span>
+      </button>
+      <button class="nav-item" data-view="todo">
+        <span class="nav-ico">☑</span><span class="nav-label">To Do List</span>
+      </button>
+      <button class="nav-item" data-view="shopping">
+        <span class="nav-ico">◗</span><span class="nav-label">Shopping List</span>
+      </button>
+    </nav>
+    <div class="sidebar-foot">
+      <button class="side-act" id="backupBtn">⤓ Backup</button>
+      <button class="side-act" id="restoreBtn">⤒ Restore</button>
+      <button class="side-act" id="printBtn">🖨 Print</button>
+      <p class="side-note">All data is saved on this device.</p>
+    </div>
+  </aside>
+  <div class="scrim" id="scrim" hidden></div>
+
+  <!-- ===== Content ===== -->
+  <main class="content" id="content">
+
+    <!-- ----- Main view ----- -->
+    <section class="view view-main is-active" id="view-main">
+      <div class="clock-card">
+        <div class="clock-week" id="clockWeek">—</div>
+        <div class="clock-time" id="clockTime">--:--:--</div>
+        <div class="clock-date" id="clockDate">Today</div>
       </div>
-    </header>
 
-    <!-- ===== TOP: two cards ===== -->
-    <section class="grid-two" aria-label="Lists">
-      <!-- To Do List -->
-      <article class="card card-todo">
-        <span class="card-wash" aria-hidden="true"></span>
-        <div class="card-head">
-          <span class="card-icon">📝</span>
-          <h2 class="card-title">To Do List</h2>
-          <span class="count" id="todoCount"></span>
-        </div>
-        <div class="input-row">
-          <input type="text" id="todoInput" class="text-input" placeholder="What's on your list?" maxlength="120" />
-          <button class="add-btn add-blue" id="todoAdd" aria-label="Add task">+</button>
-        </div>
-        <ul class="list" id="todoList"></ul>
-        <div class="empty" id="todoEmpty">Nothing to do — enjoy the day! 🌸</div>
-        <button class="clear-btn" id="todoClear">Clear done</button>
-      </article>
+      <div class="diary-block">
+        <h2 class="block-head">Daily Diaries <span class="block-sub">· Emotion written</span></h2>
 
-      <!-- Shopping List -->
-      <article class="card card-shop">
-        <span class="card-wash pink" aria-hidden="true"></span>
-        <div class="card-head">
-          <span class="card-icon">🛒</span>
-          <h2 class="card-title">Shopping List</h2>
-          <span class="count" id="shopCount"></span>
-        </div>
-        <div class="input-row">
-          <input type="text" id="shopInput" class="text-input" placeholder="Add an item…" maxlength="120" />
-          <input type="number" id="shopQty" class="qty-input" value="1" min="1" max="999" />
-          <button class="add-btn add-pink" id="shopAdd" aria-label="Add item">+</button>
-        </div>
-        <ul class="list" id="shopList"></ul>
-        <div class="empty" id="shopEmpty">Your basket is empty 🧺</div>
-        <button class="clear-btn" id="shopClear">Clear bought</button>
-      </article>
-    </section>
-
-    <!-- ===== BOTTOM: diary card ===== -->
-    <section aria-label="Daily diary">
-      <article class="card card-diary" id="diaryCard">
-        <span class="card-wash mix" aria-hidden="true"></span>
-        <div class="card-head">
-          <span class="card-icon">📖</span>
-          <h2 class="card-title">Daily Diaries / Emotion Written</h2>
-        </div>
-
-        <div class="diary-edit">
-          <div class="diary-top">
-            <label class="date-wrap">
-              <span class="date-label">Date</span>
-              <input type="date" id="diaryDate" class="date-input" />
-            </label>
-            <div class="mood-row" id="moodRow"></div>
+        <div class="card diary-editor">
+          <div class="mood-row" id="moodRow">
+            <span class="mood-label">Today I feel</span>
+            <button class="mood" data-mood="Happy">😊 <span>Happy</span></button>
+            <button class="mood" data-mood="Calm">🌿 <span>Calm</span></button>
+            <button class="mood" data-mood="Loved">💖 <span>Loved</span></button>
+            <button class="mood" data-mood="Tired">🌙 <span>Tired</span></button>
+            <button class="mood" data-mood="Sad">🌧 <span>Sad</span></button>
+            <button class="mood" data-mood="Angry">🔥 <span>Angry</span></button>
+            <button class="mood" data-mood="Grateful">🌼 <span>Grateful</span></button>
+            <button class="mood" data-mood="Inspired">✨ <span>Inspired</span></button>
           </div>
 
-          <textarea id="diaryText" class="diary-text" rows="4" placeholder="Today I felt…"></textarea>
+          <textarea class="diary-text" id="diaryText" rows="4" placeholder="How was your day? Write a few lines…"></textarea>
 
-          <div class="photo-row">
-            <label class="photo-add">
-              <input type="file" accept="image/*" multiple id="photoInput" hidden />
-              <span>🖼️ Add photo</span>
-            </label>
-            <div class="photo-preview" id="photoPreview"></div>
+          <div class="diary-tools">
+            <label class="photo-add" for="photoInput">＋ Photo</label>
+            <input type="file" id="photoInput" accept="image/*" multiple hidden />
+            <div class="photo-thumbs" id="photoThumbs"></div>
+            <button class="btn btn-clay" id="diarySave">Save entry</button>
           </div>
-
-          <button class="save-btn" id="diarySave">Save entry</button>
-          <span class="auto-note" id="autoNote"></span>
         </div>
 
-        <h3 class="entries-title">Past entries</h3>
         <div class="entries" id="entries"></div>
-        <div class="empty" id="entriesEmpty">Write your heart out ✍️</div>
-      </article>
+      </div>
     </section>
 
-    <!-- ===== TOOLBAR ===== -->
-    <footer class="toolbar">
-      <button class="tool-btn" id="exportBtn">💾 Backup</button>
-      <button class="tool-btn" id="importBtn">↩ Restore</button>
-      <button class="tool-btn" id="printBtn">🖨️ Print A4</button>
-      <input type="file" id="importFile" accept="application/json" hidden />
-    </footer>
+    <!-- ----- To Do view ----- -->
+    <section class="view view-todo" id="view-todo">
+      <div class="add-bar">
+        <input class="add-input" id="todoInput" placeholder="Add a task…" maxlength="140" />
+        <button class="btn btn-dark" id="todoAdd">Add</button>
+      </div>
+      <div class="progress" id="todoProgress" hidden>
+        <span class="progress-text" id="todoProgressText">0 / 0 done</span>
+        <span class="progress-track"><span class="progress-fill" id="todoProgressFill"></span></span>
+      </div>
+      <ul class="task-list" id="todoList"></ul>
+      <p class="empty-hint" id="todoEmpty">No tasks yet. Add one above to get started.</p>
+    </section>
 
-    <p class="footnote">Listing · saved on your device only · no account, no cloud</p>
+    <!-- ----- Shopping view ----- -->
+    <section class="view view-shopping" id="view-shopping">
+      <div class="add-bar">
+        <input class="add-input" id="shopInput" placeholder="Add an item…" maxlength="140" />
+        <button class="btn btn-dark" id="shopAdd">Add</button>
+      </div>
+      <div class="progress" id="shopProgress" hidden>
+        <span class="progress-text" id="shopProgressText">0 / 0 done</span>
+        <span class="progress-track"><span class="progress-fill" id="shopProgressFill"></span></span>
+      </div>
+      <ul class="task-list" id="shopList"></ul>
+      <p class="empty-hint" id="shopEmpty">Your basket is empty. Add something to buy.</p>
+    </section>
+
   </main>
 
-  <!-- backup reminder -->
-  <div class="reminder" id="reminder">
-    <span class="reminder-text"></span>
-    <button class="reminder-btn" id="reminderBtn">Backup now</button>
-    <button class="reminder-x" id="reminderX" aria-label="Dismiss">×</button>
+  <!-- hidden restore file input -->
+  <input type="file" id="restoreInput" accept="application/json,.json" hidden />
+
+  <!-- lightbox -->
+  <div class="lightbox" id="lightbox" hidden>
+    <button class="lb-close" id="lbClose" aria-label="Close">✕</button>
+    <img id="lbImg" alt="" />
   </div>
 
   <!-- toast -->
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="toast" id="toast" hidden></div>
 
-  <!-- lightbox -->
-  <div class="lightbox" id="lightbox"><img id="lightboxImg" alt="" /></div>
+  <!-- backup reminder -->
+  <div class="reminder" id="reminder" hidden>
+    <span class="reminder-text">It’s been a while — back up your data so nothing gets lost.</span>
+    <button class="btn btn-clay" id="reminderBackup">Backup now</button>
+    <button class="reminder-x" id="reminderClose">✕</button>
+  </div>
 
   <script src="js/app.js"></script>
 </body>
