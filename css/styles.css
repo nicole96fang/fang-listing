@@ -72,27 +72,29 @@ ul { list-style: none; }
   position: sticky; top: 0; z-index: 40;
   display: flex; align-items: center; gap: 12px;
   height: 60px; padding: 0 16px;
-  background: var(--charcoal);
-  color: var(--cream);
+  background: var(--cream-2);
+  color: var(--ink);
+  border-bottom: 1px solid var(--line-soft);
 }
-.icon-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--cream); transition: background .18s; }
-.icon-btn:hover, .icon-btn:active { background: rgba(255,255,255,0.10); }
+.icon-btn { width: 40px; height: 40px; display: grid; place-items: center; border-radius: 50%; color: var(--ink); transition: background .18s; }
+.icon-btn:hover, .icon-btn:active { background: rgba(25,25,31,0.06); }
 .burger { width: 18px; display: flex; flex-direction: column; gap: 4px; }
-.burger i { display: block; height: 2px; background: var(--cream); border-radius: 2px; }
+.burger i { display: block; height: 2px; background: var(--ink); border-radius: 2px; }
 .view-title { font-size: 22px; font-weight: 600; letter-spacing: 0.2px; flex: 1; }
-.topbar-date { font-size: 14px; color: var(--ink-faint); white-space: nowrap; }
+.topbar-date { font-size: 14px; color: var(--ink-soft); white-space: nowrap; }
 
 /* ===== Sidebar ===== */
 .sidebar {
   position: fixed; top: 0; left: 0; bottom: 0; z-index: 60;
   width: var(--side-w); max-width: 82vw;
-  background: var(--charcoal);
-  color: var(--cream);
+  background: var(--paper);
+  color: var(--ink);
   display: flex; flex-direction: column;
   padding: 22px 18px 18px;
   transform: translateX(-100%);
   transition: transform .28s cubic-bezier(.4,.0,.2,1);
   box-shadow: var(--shadow);
+  border-right: 1px solid var(--line-soft);
 }
 .sidebar.open { transform: translateX(0); }
 .brand { display: flex; align-items: center; gap: 11px; padding: 6px 8px 22px; }
@@ -102,26 +104,33 @@ ul { list-style: none; }
   background: var(--clay); color: var(--cream);
   font-size: 22px; font-weight: 700;
 }
-.brand-name { font-size: 26px; font-weight: 700; letter-spacing: 0.3px; }
+.brand-name { font-size: 26px; font-weight: 700; letter-spacing: 0.3px; color: var(--ink); }
 
-.nav { display: flex; flex-direction: column; gap: 4px; flex: 1; }
+/* nav buttons — light card with dashed outline (not solid black) */
+.nav { display: flex; flex-direction: column; gap: 11px; flex: 1; }
 .nav-item {
   display: flex; align-items: center; gap: 13px;
-  padding: 13px 14px; border-radius: var(--radius-sm);
-  color: var(--ink-faint); font-size: 19px; text-align: left;
-  transition: background .18s, color .18s;
+  padding: 14px 16px; border-radius: var(--radius-md);
+  background: var(--cream);
+  border: 1.5px dashed var(--line);
+  color: var(--ink-soft); font-size: 19px; text-align: left;
+  transition: border-color .18s, color .18s, background .18s;
 }
-.nav-item:hover { background: rgba(255,255,255,0.05); color: var(--cream); }
-.nav-item.active { background: var(--charcoal-3); color: var(--cream); }
+.nav-item:hover { border-color: var(--ink-soft); color: var(--ink); background: var(--paper-d); }
+.nav-item.active {
+  border: 2px dashed var(--clay);
+  color: var(--ink);
+  background: rgba(168,120,96,0.10);
+}
 .nav-item.active .nav-ico { color: var(--clay); }
 .nav-ico { font-size: 18px; width: 22px; text-align: center; }
 
-.sidebar-foot { display: flex; flex-direction: column; gap: 6px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.08); }
+.sidebar-foot { display: flex; flex-direction: column; gap: 6px; padding-top: 14px; border-top: 1px solid var(--line-soft); }
 .side-act {
   padding: 10px 14px; border-radius: var(--radius-sm); text-align: left;
-  color: var(--ink-faint); font-size: 16px; transition: background .18s, color .18s;
+  color: var(--ink-soft); font-size: 16px; transition: background .18s, color .18s;
 }
-.side-act:hover { background: rgba(255,255,255,0.05); color: var(--cream); }
+.side-act:hover { background: var(--paper-d); color: var(--ink); }
 .side-note { font-size: 13px; color: var(--ink-faint); margin-top: 6px; line-height: 1.4; opacity: .8; }
 
 .scrim {
