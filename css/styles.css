@@ -66,7 +66,7 @@ body {
 /* warm watercolor wash — fixed layer so it stays put on mobile (matches reference image) */
 body::before {
   content: "";
-  position: fixed; inset: 0; z-index: -1;
+  position: fixed; inset: 0; z-index: -2;
   pointer-events: none;
   background:
     radial-gradient(circle at 15% 10%, rgba(232,216,208,0.55), transparent 42%),
@@ -76,6 +76,27 @@ body::before {
     radial-gradient(circle at 52% 48%, rgba(167,188,206,0.16), transparent 52%),
     radial-gradient(circle at 60% 92%, rgba(224,214,200,0.40), transparent 50%),
     var(--cream);
+}
+/* watercolour grid — soft hand-painted squares laid over the wash.
+   Fine grid in faint clay, bolder grid in warm gold; a touch of blur
+   + a radial mask give the bleeding, vignette feel of real pigment on paper. */
+body::after {
+  content: "";
+  position: fixed; inset: 0; z-index: -1;
+  pointer-events: none;
+  background-image:
+    /* fine grid — clay */
+    linear-gradient(rgba(168,120,96,0.075) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(168,120,96,0.075) 1px, transparent 1px),
+    /* bold grid — gold (every 4th fine cell) */
+    linear-gradient(rgba(197,168,96,0.10) 1.5px, transparent 1.5px),
+    linear-gradient(90deg, rgba(197,168,96,0.10) 1.5px, transparent 1.5px);
+  background-size: 26px 26px, 26px 26px, 104px 104px, 104px 104px;
+  background-position: 0 0, 0 0, 0 0, 0 0;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 38%, #000 58%, transparent 100%);
+          mask-image: radial-gradient(ellipse at 50% 38%, #000 58%, transparent 100%);
+  filter: blur(0.6px);
+  opacity: 0.9;
 }
 button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
 input, textarea, select { font-family: inherit; color: inherit; }
@@ -406,6 +427,7 @@ ul { list-style: none; }
 @media print {
   @page { size: A4; margin: 14mm; }
   body { background: #fff; color: #000; }
+  body::before, body::after { display: none !important; }
   .topbar, .sidebar, .scrim, .add-bar, .diary-tools, .progress, .del-btn, .qty, .reminder, .toast, .lightbox, .empty-hint { display: none !important; }
   .content { margin: 0 !important; padding: 0 !important; max-width: 100%; }
   .view { display: block !important; page-break-inside: avoid; }
