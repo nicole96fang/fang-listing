@@ -30,8 +30,10 @@
   --line:        rgba(93, 78, 66, 0.10);
   --white:       #ffffff;
 
+  /* Whole system uses TCAntiquatedSans (the user's chosen font) everywhere.
+     Quicksand / system fonts only act as a fallback if the .otf fails to load. */
   --font-deco: 'TCAntiquatedSans', 'Caveat', cursive;
-  --font-body: 'Quicksand', system-ui, -apple-system, sans-serif;
+  --font-body: 'TCAntiquatedSans', 'Quicksand', system-ui, -apple-system, sans-serif;
 
   --radius:    28px;
   --radius-md: 20px;
@@ -41,8 +43,8 @@
   --press:     0 2px 0 rgba(0,0,0,0.04);
 }
 
-/* reset */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+/* reset — every element inherits the user's chosen font */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); }
 html { -webkit-text-size-adjust: 100%; }
 body {
   font-family: var(--font-body);
