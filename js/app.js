@@ -100,9 +100,12 @@ async function renderTodos() {
   const prog = $('#todoProgress');
   prog.hidden = total === 0;
   if (total) {
+    const pct = done / total * 100;
     $('#todoProgressText').textContent = `${done} / ${total} done`;
-    $('#todoProgressFill').style.width = (done / total * 100) + '%';
-  }
+    $('#todoProgressFill').style.width = pct + '%';
+    $('#todoProgressKnob').style.left = pct + '%';
+    prog.classList.toggle('is-complete', done === total);
+  } else { prog.classList.remove('is-complete'); }
   $('#todoEmpty').hidden = total !== 0;
 }
 function todoItemEl(it) {
@@ -144,9 +147,12 @@ async function renderShopping() {
   const prog = $('#shopProgress');
   prog.hidden = total === 0;
   if (total) {
+    const pct = done / total * 100;
     $('#shopProgressText').textContent = `${done} / ${total} done`;
-    $('#shopProgressFill').style.width = (done / total * 100) + '%';
-  }
+    $('#shopProgressFill').style.width = pct + '%';
+    $('#shopProgressKnob').style.left = pct + '%';
+    prog.classList.toggle('is-complete', done === total);
+  } else { prog.classList.remove('is-complete'); }
   $('#shopEmpty').hidden = total !== 0;
 }
 function shopItemEl(it) {
